@@ -1,4 +1,3 @@
-
 ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,xn--ngstr-lra8j.com
 ruleset=🚀 节点选择,[]DOMAIN-SUFFIX,services.googleapis.cn
 ruleset=🚀 节点选择,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleCNProxyIP.list
@@ -13,9 +12,33 @@ ruleset=DIRECT,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ch
 ruleset=DIRECT,[]GEOIP,CN,no-resolve
 ruleset=🚀 节点选择,[]FINAL
 
-custom_proxy_group=🚀 节点选择`select`[]🇭🇰 香港节点`[]♻ 自动选择`[]DIRECT`.*
-custom_proxy_group=♻️ 自动选择`url-test`.*`http://www.gstatic.com/generate_204`300,,50
-custom_proxy_group=🇭🇰 香港节点`url-test`.*HK.*`http://www.gstatic.com/generate_204`300,,50
+proxy-groups:
+  - name: "🚀 节点选择"
+    type: select
+    proxies:
+      - "🇭🇰 香港节点"
+      - "♻️ 自动选择"
+      - DIRECT
+  - name: "♻️ 自动选择"
+    type: url-test
+    proxies: 
+      - "*" # 确保这里列出了所有代理节点名称或者使用 '*' 来选择所有节点
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
+  - name: "🇭🇰 香港节点"
+    type: url-test
+    proxies: 
+      - "*HK*" # 确保这里的正则表达式正确匹配您的香港节点名称
+    url: "http://www.gstatic.com/generate_204"
+    interval: 300
+    tolerance: 50
 
-enable_rule_generator=true
-overwrite_original_rules=true
+rule-providers:
+  # ... (这里包含了您的规则提供者定义)
+
+rules:
+  # ... (这里包含了您的规则定义)
+
+enable_rule_generator: true
+overwrite_original_rules: true
